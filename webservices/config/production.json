@@ -1,0 +1,12 @@
+{
+	"serviceName": "Fiona WebServices",
+	"port": 3000,
+	"logLevel": 0,
+	"authSecret": "hct7uM05sEin0P3l7t1L3T4h1",
+	"api": {
+		"address": "http://10.0.1.3:8081/v1"
+	},
+	"gis": {
+		"address": "http://10.0.1.7/pandonia/{z}/{x}/{y}.png"
+	}
+}

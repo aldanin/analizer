@@ -1,0 +1,12 @@
+/* tslint:disable */
+
+/**
+* Copy this file one level up from "common-components-dist" folder
+* Save it under the name "common-components-configuration.ts".
+* Then adjust the import locations to fit your project's structure.
+*/
+
+export var commonComponentsConfiguration = {
+    themeName: "Not implemented",
+    staticPath: "common-components/${componentName}", // absolute path to static files of common components (or relative from the application index.html file)
+}

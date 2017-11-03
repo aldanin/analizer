@@ -1,0 +1,370 @@
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: ACE
+  description: Ace of Base
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /handshake:
+    get:
+      description: Initialize connection between client and backend
+      parameters:
+        - name: client_version
+          in: query
+          description: current running client version
+          required: true
+          type: string
+      responses:
+        '200':
+          description: handshake response
+          schema:
+            type: object
+            properties:
+              api_url: 
+                type: string
+                description: url of the API that the client should talk to
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /login:
+    post:
+      description: Login a user
+      parameters:
+        - name: username
+          in: query
+          description: name of user
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: password of user
+          required: true
+          type: string
+          format: password
+      responses:
+        '200':
+          description: succesful login response
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: id token
+        '401':
+          description: bad credentials response
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /notifications:
+    get:
+      description: get notifications for user
+      security:
+        - Bearer: []
+      parameters:
+        - name: limit
+          in: query
+          description: how many notifications to fetch.
+          required: false
+          type: integer
+          default: 100
+        - name: last_id
+          in: query
+          description: id of last notification that was fetched
+          required: false
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: notifications list
+          schema:
+            type: object
+            properties:
+              count_unread: 
+                type: integer
+                description: count of unread notifications
+              count_total: 
+                type: integer
+                description: total count of notifications
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                      description: id of notification
+                    text:
+                      type: string
+                      description: text of notification
+                    timestamp:
+                      type: string
+                      format: date-time
+                      description: time notification was created
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /targets:
+    get: 
+      description: get available targets for operator
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: targets list
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                      description: id of target
+                    description:
+                      type: string
+                      description: target description
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /targets/{id}:
+    get: 
+      description: get info about a specific target
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: id of target to fetch.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: target info
+          schema:
+            type: object
+            properties:
+              id: 
+                type: string
+                description: id of target
+              description:
+                type: string
+                description: target description
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /agents:
+    get: 
+      description: get available agents for operator
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: agents list
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                      description: id of target
+                    agent_type:
+                      type: string
+                      description: agent type
+                    parent_id: 
+                      type: string
+                      description: id of target this agent belongs to
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /agents/{id}:
+    get: 
+      description: get info about a specific agent
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: id of agent to fetch.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent info
+          schema:
+            type: object
+            properties:
+              id: 
+                type: string
+                description: id of agent
+              agent_type:
+                type: string
+                description: agent type
+              parent_id: 
+                type: string
+                description: id of target this agent belongs to
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /agents/{id}/status:
+    get: 
+      description: get status info about a specific agent
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: id of agent to check
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent status info
+          schema:
+            type: object
+            properties:
+              id: 
+                type: string
+                description: id of agent
+              last_extract:
+                type: string
+                format: date_time
+                description: last extraction timestamp
+              expiry:
+                type: string
+                format: date_time
+                description: expiry timestamp
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /agents/{id}/counters:
+    get: 
+      description: get new product counters per product type for a specific agent
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: id of agent to check
+          required: true
+          type: string
+        - name: group_by
+          in: query
+          description: how to group counters, one of family | ...
+          required: false
+          default: foo
+          type: string
+      responses:
+        '200':
+          description: agent product counters
+          schema:
+            type: object
+            properties:
+              id: 
+                type: string
+                description: id of agent
+              counters:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: product type title
+                    count:
+                      type: integer
+                      description: count of new products of this type
+              last_update:
+                type: string
+                format: date_time
+                description: timestamp of last counters update time
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /agents/{id}/product_counters/{ptype}:
+    get: 
+      description: get new product counters for product type for a specific agent
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: id of agent to check
+          required: true
+          type: string
+        - name: ptype
+          in: path
+          description: type of product the counters relate to
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent product counters
+          schema:
+            type: object
+            properties:
+              id: 
+                type: string
+                description: id of agent
+              counters:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: product type id
+                    title:
+                      type: string
+                      description: product type title
+                    count:
+                      type: integer
+                      description: count of new products of this type
+              last_update:
+                type: string
+                format: date_time
+                description: timestamp of last counters update time
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+      
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header            
+definitions:
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

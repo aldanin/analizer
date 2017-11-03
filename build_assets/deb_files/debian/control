@@ -1,0 +1,12 @@
+Source: ice-fiona
+Section: utils
+Priority: optional
+Maintainer: admin <admin@admin.local>
+Standards-Version: 1.0.0
+Build-Depends: debhelper (>= 8.0.0)
+
+Package: ice-fiona
+Architecture: amd64
+Depends: nodejs (>= 6.11.1)
+Description: fiona 
+ fiona package 

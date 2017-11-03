@@ -1,0 +1,12 @@
+{
+	"serviceName": "Fiona WebServices",
+	"port": 5000,
+	"logLevel": 0,
+	"authSecret": "hct7uM05sEin0P3l7t1L3T4h1",
+	"api": {
+		"address": "http://localhost:8081/v1"
+	},
+	"gis": {
+		"address": "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
+	}
+}

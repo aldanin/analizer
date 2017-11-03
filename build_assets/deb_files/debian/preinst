@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+APP_NAME=fiona
+
+case "$1" in
+    install)
+    echo "install called"
+    mkdir -p /opt/fiona
+    ;;
+
+    upgrade)
+    echo "upgrade called"
+    service $APP_NAME stop || true
+    ;;
+
+    abort-upgrade)
+    echo "abort-upgrade called"
+    ;;
+
+    *)
+        echo "preinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

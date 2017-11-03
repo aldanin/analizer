@@ -1,0 +1,46 @@
+#!/bin/bash -x
+
+set -e 
+
+# CONSTANTS
+APP_NAME=fiona
+USERNAME=fiona
+
+case "$1" in
+    configure)
+	    	# ----------------------------------------------------------
+			# Create new user, uncomment the following lines
+			# ----------------------------------------------------------
+            		groupadd $USERNAME || true
+			adduser --system --no-create-home --disabled-login $USERNAME || true
+			usermod -a -G $USERNAME $USERNAME || true
+
+			# ----------------------------------------------------------
+			# Assign user to application:
+			# ----------------------------------------------------------
+			chown -R root:$USERNAME /opt/$APP_NAME
+
+			# ----------------------------------------------------------
+			# Set Executable and folder permissions
+			# ----------------------------------------------------------
+			chmod 550 /opt/$APP_NAME/$APP_NAME.sh
+			chmod 550 /opt/$APP_NAME
+			chmod 650 /etc/$APP_NAME
+			chown -R $USERNAME /opt/$APP_NAME
+
+			# ----------------------------------------------------------
+			# Start Service
+			# ----------------------------------------------------------
+			service $APP_NAME start || true
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

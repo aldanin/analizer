@@ -1,0 +1,13 @@
+{
+	"name": "FionaWS",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"dependencies": {},
+	"devDependencies": {},
+	"scripts": {
+		"start": "NODE_ENV=production node app.js"
+	},
+	"author": "",
+	"license": "COMMERCIAL"
+}

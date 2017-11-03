@@ -1,0 +1,18 @@
+{
+	"serviceName": "Fiona WebServices",
+	"port": 5000,
+	"logLevel": 0,
+	"authSecret": "hct7uM05sEin0P3l7t1L3T4h1",
+	"api": {
+		"address": "http://localhost:8081/v1"
+	},
+	"ssh": {
+		"username": "user",
+		"password": "alice@20@",
+		"host": "94.188.161.158",
+		"port": 22,
+		"dstHost": "10.20.20.11",
+		"dstPort": 8081,
+		"keepAlive" : true
+	}
+}
