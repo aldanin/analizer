@@ -2,7 +2,6 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 
 import Header from '../components/Header'
-import Timeline from '../components/Timeline'
 import Information from '../components/InformationPanel'
 import { AgentId } from '../types/Agent'
 
@@ -27,9 +26,7 @@ const Wrapper = styled.div`
 const HeaderArea = styled.div`
   grid-area: header;
 `
-const TimelineArea = styled.div`
-  grid-area: timeline;
-`
+
 const MainArea = styled.div`
   grid-area: main;
   overflow: auto;
@@ -65,9 +62,6 @@ class AppViewerLayout extends React.Component<AppViewerLayoutProps, {}> {
         <HeaderArea>
           <Header agentId={agentId}/>
         </HeaderArea>
-        <TimelineArea>
-          <Timeline theme={theme.timeline}/>
-        </TimelineArea>
         <MainArea>
             {children}
         </MainArea>

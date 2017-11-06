@@ -2,7 +2,6 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 
 import Header from '../components/Header'
-import Timeline from '../components/Timeline'
 import Notebook from '../components/InformationPanel'
 import { AgentId } from '../types/Agent'
 
@@ -42,7 +41,6 @@ class AppViewerLayout extends React.Component<AppViewerLayoutProps, {}> {
       <Wrapper>
         <Header agentId={agentId}/>
         <WrapperMain>
-          <Timeline theme={theme.timeline}/>
           <WrapperViewer>
             {children}
           </WrapperViewer>

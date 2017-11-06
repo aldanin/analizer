@@ -1,6 +1,5 @@
 import * as Immutable from 'immutable';
 import * as StdActions from '../actions/ProductActions';
-import { fromJS } from 'immutable';
 import { ProductStateProps, DEFAULT_PRODUCT_DATA_STATE } from '../interfaces'
 import { isUndefined } from 'util';
 
@@ -30,37 +29,6 @@ export function stdImmutableUpdateData(path: string[],
       return state
         .setIn(tempPathShadowed, (action as StdActions.ProductSetFavoriteAction).payload.isFavorite);
     }
-
-    case StdActions.PRODUCT_REMOVE_TAG:
-      const productID = (action as StdActions.ProductRemoveTagAction).payload.id;
-      const tagID = (action as StdActions.ProductRemoveTagAction).payload.tagId;
-      const tagIndex = state.getIn(path).findIndex(item => {
-        return item.get('id') === productID
-      });
-      const tempPath = path.slice(0);
-      tempPath.push(tagIndex);
-      tempPath.push('tags');
-      return state
-        .updateIn(tempPath, (tags) => tags.filter(
-          (tag) => tag !== tagID)
-        );
-
-    case StdActions.PRODUCT_ADD_TAG:
-      const allIDs = (action as StdActions.ProductAddTagAction).payload.ids;
-      const allTags = (action as StdActions.ProductAddTagAction).payload.tags;
-      return state.withMutations(tempState => {
-        allIDs.forEach(id => {
-          const index = tempState.getIn(path).findIndex(item => {
-            return item.get('id') === id
-          });
-          const tempPathShadowed = path.slice(0);
-          tempPathShadowed.push(index);
-          tempPathShadowed.push('tags');
-          allTags.map((tag) => {
-            tempState.updateIn(tempPathShadowed, (tags) => tags.push(fromJS(tag)));
-          })
-        })
-      });
 
     case StdActions.PRODUCT_MARK_AS_READ:
       return state.withMutations(tempState => {

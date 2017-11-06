@@ -7,7 +7,6 @@ import { CSSProperties } from 'react';
 import { actionMenu, ActionsArray, ADD_TAG_ACTION } from './Type';
 import styled, { ThemeProvider } from 'styled-components';
 import { TagData } from '../../../types/Tag';
-import AddTagWindow from '../../../containers/AddTagWindow';
 
 export const MenuIcon = styled.span`
   color: ${prop => prop.theme.iconColor};
@@ -148,16 +147,7 @@ export default class ActionMenu extends React.Component<ActionMenuProps, ActionM
       color: this.props.theme.iconMenuColor,
       cursor: 'pointer',
     }
-    return this.state.isAddTagMenu ? this.renderAddTagWindow() : this.renderActionMenu();
-  }
-
-  renderAddTagWindow() {
-    return (
-      <AddTagWindow
-        isOpen={this.state.isAddTagMenu}
-        onClose={(tags: TagData[]) => this.handleRequestClose(tags)}
-      />
-    )
+    return this.renderActionMenu();
   }
 
   renderActionMenu() {

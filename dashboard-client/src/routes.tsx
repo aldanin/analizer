@@ -9,7 +9,7 @@ import AppViewerLayout from './containers/AppViewerLayout'
 import AppViewerGridLayout from './containers/AppViewerGridLayout'
 import NotFoundPage from './components/NotFoundPage/'
 import ContactsAppPage from './containers/ContactsAppViewer';
-import Summary from './containers/Summary'
+// import Summary from './containers/Summary'
 import { ViewPage } from './urlHelper';
 
 
@@ -24,7 +24,7 @@ export default (
       <Route component={AppViewerLayout}>
         <Route path="/agent/:agent_id" component={ContactsAppPage} />
         <Route path={`/agent/:agent_id/${ViewPage.CONTACTS}`} component={ContactsAppPage} />
-        <Route path={`/agent/:agent_id/${ViewPage.SUMMARY}`} component={Summary} />
+        {/*<Route path={`/agent/:agent_id/${ViewPage.SUMMARY}`} component={Summary} />*/}
       </Route>
     </Route>
     <Route path="*" component={NotFoundPage} />

@@ -68,50 +68,8 @@ class ProductionApi {
     // return Promise.resolve(this.get(uri)).then((result) => result.data);
   }
 
-  public fetchIMProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/im`, query);
-
-    return this.get(uri).then((result) => result.data);
-  }
-
-  public fetchEmailProducts(meta: types.ProductMeta): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/emails`);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchBrowserHistoryProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/browser/history`, query);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchBrowserBookmarkProducts(meta: types.ProductMeta): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/browser/bookmarks`);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
   public fetchContactProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
     let uri = this.generateApiURI(`appdata/${meta.agentId}/contacts`, query);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchLocationProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/locations`, query);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchGalleryProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/images/gallery`, query);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchSnapshotsProducts(meta: types.ProductMeta, query: types.ApiQueryParams): AxiosPromise {
-    let uri = this.generateApiURI(`appdata/${meta.agentId}/images/snapshots`, query);
 
     return Promise.resolve(this.get(uri)).then((result) => result.data);
   }
@@ -126,18 +84,6 @@ class ProductionApi {
     let uri = this.generateApiURI(`${meta.agentId}/files/${objId}`);
 
     return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchAllTags(): AxiosPromise {
-    let uri = this.generateApiURI(`tags`);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data);
-  }
-
-  public fetchProductTags(meta: types.ProductMeta): AxiosPromise {
-    let uri = this.generateApiURI(`tags/${meta.agentId}/${meta.productType}/${meta.productId}`);
-
-    return Promise.resolve(this.get(uri)).then((result) => result.data[`producttags${meta.productType}`]);
   }
 
   public addProductTag(meta: types.ProductMeta, tag: string): AxiosPromise {
